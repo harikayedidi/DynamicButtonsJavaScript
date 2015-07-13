@@ -1,0 +1,134 @@
+!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+<style type="text/css">
+    input#search
+    {
+        width: 180px;
+        height: 40px;
+		color: #0C090A;
+		font-size:20px;
+		font-family:"Comic sans MS";
+		border-radius: 10px;
+		border: solid 3px #0C090A;
+    }
+	input{
+     width: 80px; 
+     box-sizing: border-box;
+     -webkit-box-sizing:border-box;
+     -moz-box-sizing: border-box;
+	}
+</style>
+<script type="text/javascript">
+function clickReset() {
+localStorage.clickButton = 0;
+document.getElementById("tableid").innerHTML = "";
+}
+
+ function clickButton(e) {
+			e=e||window.event;
+			//var src= e.target || e.srcElement;
+			iTempVar="inp"+e.id;
+			e2=document.getElementById(iTempVar);
+			//localStorage.clickButton = Number(e2.innerText) + 1;
+			localStorage.clickButton = Number(e2.textContent) + 1;
+			if (document.all) {
+ 
+            e2.innerText = localStorage.clickButton;
+        }
+        else {
+            e2.textContent = localStorage.clickButton;
+        }	
+			
+    }		
+
+function addTable() {
+      
+    var myTableDiv = document.getElementById("myDynamicTable");
+	   
+	var num_rows = document.getElementById('rows').value;
+    var num_cols = document.getElementById('cols').value;
+      
+    var table = document.createElement('TABLE');
+    table.border='1';
+	table.id="tableid";
+
+    
+    var tableBody = document.createElement('TBODY');
+    table.appendChild(tableBody);
+	var tr = document.createElement('TR'); 
+       tableBody.appendChild(tr);
+	   var today = new Date();
+            tr.appendChild(document.createTextNode(today.toLocaleDateString() + "  " + today.toLocaleTimeString()));
+	var tr1 = document.createElement('TR');
+	var td1 = document.createElement('TD');
+	   tableBody.appendChild(td1);
+	   td1.appendChild(document.createTextNode(" "));
+	   td1.setAttribute("style", "width:90px");   
+	for(var k=0; k<num_cols;k++)
+	{
+	var tr = document.createElement('TR'); 
+	   var td = document.createElement('TD');
+       tableBody.appendChild(td);
+	   var txta = td.appendChild(document.createElement("input"));
+	   txta.setAttribute("type","text");
+	  txta.setAttribute("style", "width:60px");
+	   txta.setAttribute("value","a"+(k+1));
+	   var td2 = document.createElement('TD');
+	   tableBody.appendChild(td2);
+	   td2.appendChild(document.createTextNode(" "));
+	   td2.setAttribute("style", "width:60px")
+	   
+	 }
+ 	
+    for (var i=0; i<num_rows; i++){
+       var tr = document.createElement('TR'); 
+       tableBody.appendChild(tr);
+	   var txtb = tr.appendChild(document.createElement("input"));
+	   txtb.setAttribute("value","b"+(i+1));
+	   txtb.setAttribute("type","text");
+	   txtb.setAttribute("style", "width:60px");
+       for (var j=0; j<num_cols; j++){
+           var td = document.createElement('TD');
+		   tableBody.appendChild(td);
+			   var b1=tr.appendChild(td).innerHTML= '<button id="'+i+j+'" style="background-color:#E5E4E2; width:60px; height:30px; align:center" type="button" onClick="clickButton(this)" value ="Click">&#9658;</button>';
+			   //b1.width='50px';
+		var td1 = document.createElement('TD');
+		td1.id="inp";
+	   var b2 = tr.appendChild(td1);
+		   b2.id ="inp"+i+j;
+		  b2.setAttribute("style", "width:60px;background-color:White;align:center");
+		         }
+    }
+    myTableDiv.appendChild(table);  		
+}
+</script>
+</head>
+<title>Hbrs</title>
+<body bgcolor="#837E7C">
+<br>
+<input style="color:#0C090A;font-family:Georgia;background-color:#E5E4E2" id="search" onclick="clickReset()"  type="reset" value="RESET"/>
+<br>
+<div style="text-align:center"> 
+<form>
+	<label><font size="6" color="black">Enter Rows: <input type="text" name="rows" id="rows"/></label></font><br/>
+		<label><font size="6" color="black">Enter Columns: <input type="text" name="cols" id="cols"/></label></font><br/>
+		<br>
+	<input type="button" style="color:#0C090A;font-family:Georgia;background-color:#E5E4E2" id="search" value="Create a table" onclick="Javascript:addTable()">
+</form>
+	<br>
+</div>
+<div id="myDynamicTable">
+
+</div>
+<br>
+<div style="text-align:center">
+<input type="button" style="color:#0C090A;font-family:Georgia;background-color:#E5E4E2" id= "search" onclick="window.open('data:application/vnd.ms-excel,' + encodeURIComponent(document.getElementById('myDynamicTable').innerHTML));" value="Export to Excel"/> 
+<form>
+<br>
+<input style="color:#0C090A;font-family:Georgia;background-color:#E5E4E2" id= "search"  TYPE="button" VALUE="Write to Me"
+onClick="parent.location='mailto: example.com'">
+</form>
+</div>
+</body>
+</html>
